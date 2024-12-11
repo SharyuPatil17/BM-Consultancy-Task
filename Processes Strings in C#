@@ -1,0 +1,34 @@
+using System;
+using System.IO;
+using System.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        string[] lines = File.ReadAllLines("input.txt"); // Path to your input file
+        int totalPriority = 0;
+
+        foreach (string line in lines)
+        {
+            int mid = line.Length / 2;
+            string firstHalf = line.Substring(0, mid);
+            string secondHalf = line.Substring(mid);
+
+            char commonChar = firstHalf.Intersect(secondHalf).FirstOrDefault();
+            if (commonChar != '\0') // Check if there's a common character
+            {
+                totalPriority += CalculatePriority(commonChar);
+            }
+        }
+
+        Console.WriteLine("The sum of all priority values : " + totalPriority);
+    }
+
+    static int CalculatePriority(char c)
+    {
+        if (char.IsLower(c)) return c - 'a' + 1;
+        if (char.IsUpper(c)) return c - 'A' + 27;
+        return 0;
+    }
+}
